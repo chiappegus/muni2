@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Buffy{% endblock %}
+
+{% block body %}
+    <h1>Buffy</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ buffy.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ buffy.name }}</td>
+            </tr>
+            <tr>
+                <th>Quote</th>
+                <td>{{ buffy.quote }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ buffy.slug }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+     <table class="table">
+        <tbody>
+               
+            {%for nc in buffy.ComidasPreferidas%}
+            <tr>
+             <th>Id</th>
+             <td>{{ nc.id }}</td>
+              </tr>
+              <tr>
+             <th>nombre</th>
+             <td>{{ nc.nombre }}</td>
+            </tr>
+            {%endfor%}
+         </tbody>
+    </table>
+
+    <a href="{{ path('buffy_index') }}">back to list</a>
+
+    <a href="{{ path('buffy_edit', {'id': buffy.id}) }}">edit</a>
+
+    {{ include('buffy/_delete_form.html.twig') }}
+
+    <a href="{{ path('comida_preferidad_index') }}">comida_preferidas</a>
+
+{% endblock %}

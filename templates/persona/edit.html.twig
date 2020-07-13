@@ -1,0 +1,180 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+  {{parent()}}
+<script>
+      
+ $('.custom-file-input').on('change', function(event) {
+    var inputFile = event.currentTarget;
+    $(inputFile).parent().find('.custom-file-label').html(inputFile.files[0].name);
+});
+
+
+
+ 
+
+
+$(document).ready(function () {
+  $("input#image.custom-file-inputs").on('change', function(event) {
+    var inputFile = event.currentTarget;
+    $(inputFile).parent().find('label#image.custom-file-inputs').html(inputFile.files[0].name);
+});
+  
+})
+
+$("#persona_imageFile").attr("placeholder", "Type here to search");
+//document.getElementsByClassName("label.custom-file-label").placeholder = "Type name here..";
+
+    //url: $local + "/admin/arrayGus/" +  $('.valorDNI').val(),
+
+    /*===================================
+    =            anda de 10             =
+    ===================================
+    
+     $(document).ready(function() {
+        $("#actualizar_Foto").change(function(event) {
+            var formData = new FormData();
+            var files = $('#image')[0].files[0];
+            // console.log( files);
+            formData.append('files', files);
+            $.ajax({
+                url: '{{path("upload_test_GUS")}}',
+                type: 'post',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    console.log(data);
+                    $('div#actualizar_Foto').html(data);
+                    
+                }
+            })
+        })
+    });
+    */
+    /*=====  End of anda de 10   ======*/
+
+
+     $(document).ready(function() {
+        $("#persona_imageFile").change(function(event) {
+            $('button.btn.btn-primary').prop('disabled', false);
+             $('#AVISO_DANGER').remove();
+             $('div.alert.alert-danger').remove();
+
+            var formData = new FormData();
+            console.log($('#persona_imageFile')[0].files[0].size/1024);
+
+            if(($('#persona_imageFile')[0].files[0].size/1024)<2042){
+
+              //verificar que tenes problemas de path ver como se implemento 
+              // en la pagina principal
+           
+            var files = $('#persona_imageFile')[0].files[0];
+            // console.log( files);
+            formData.append('files', files);
+            formData.append('directionOld', $('.aca').attr('src'));
+            $.ajax({
+                url: '{{path("upload_test_GUS")}}',
+                type: 'post',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    console.log(data);
+                    $('div#actualizar_Foto').html(data);
+                    
+                }
+            })}
+
+            else {
+
+                console.log("NO PASAS");
+            // $('.img.rounded-circle.img-fluid')insertAfter('');
+            $('#AVISO_DANGER').remove()
+
+             $('<div class="col-sm-12"> <div id="AVISO_DANGER" class="alert alert-danger" >El archivo es muy pesado más de 2MB.</div></div>').insertBefore('img.aca');
+             //$('button.btn.btn-primary').disable();
+              $('button.btn.btn-primary').prop('disabled', true);
+         }
+
+
+
+        }) 
+            
+
+ 
+
+    });
+    
+   
+              
+            </script>
+          
+
+            {% endblock javascripts %}
+
+
+
+{% block stylesheets %}
+    {{parent()}}
+
+
+<style>
+.div-bg {
+    height: 200px;
+    width: 200px;
+    border: 1px solid black;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+#btn-color-picker {
+    background:#75F9A0;
+     color:#FF0000;
+    
+    /*border: #000 1px solid;
+    padding: 2px;
+    cursor: pointer;*/
+}
+
+.themed-grid-col{
+    padding-top: 15px;
+padding-bottom: 15px;
+background-color: rgba(86, 61, 124, .15);
+    border: 1px solid rgba(86, 61, 124, .2);
+
+.container{
+    padding-top: 15px;
+    padding-bottom: 15px;
+ /*background:#75F9A0;
+   */  color:#FF0000;
+    
+}
+#btn-color-picker:hover {
+    background:#0A7C28;
+    font-size:1em;
+  /*  border: #000 1px solid;
+    padding: 2px;
+    cursor: pointer;*/
+}
+</style>
+{% endblock %}
+{% block title %}Edit Persona{% endblock %}
+
+{% block body %}
+    <h1>Edit Persona</h1>
+
+    {{ include('persona/_form.html.twig', {'button_label': 'Update'}) }}
+    
+     <div class="row col-sm-4">
+  <div class="col"> <a href="{{ path('persona_index') }}" class="btn btn-primary" id="btn-color-picker">back to list</a></div>
+  <div class="col"> 
+    {{ include('persona/_delete_form.html.twig') }}
+  </div>
+
+</div> 
+   
+   
+   
+
+{% endblock %}

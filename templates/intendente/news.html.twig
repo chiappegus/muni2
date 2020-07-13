@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+
+
+
+{% block title %}New Intendente{% endblock %}
+
+{% block body %}
+	
+
+	<p>Username: {{ app.user.username ?? 'Anonymous user' }}</p>
+{% if app.debug %}
+    <p>Request method: {{ app.request.method }}</p>
+    <p>Application Environment: {{ app.environment }}</p>
+{% endif %}
+
+
+    <h1>Create new Intendente</h1>
+
+    {{ include('intendente/_form.html.twig') }}
+
+    <a href="{{ path('intendente_index') }}">back to list</a>
+{% endblock %}
+
+
+
+

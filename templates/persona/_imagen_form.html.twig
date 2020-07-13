@@ -1,0 +1,31 @@
+
+
+ <div class="col-sm-6">
+       
+ 	    {% for message in app.flashes('error') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
+              {% if persona.PersonaImagePath!=""%}
+
+           {#  <h3>Aca Estoy y aca me voy Actualizar con Ajax </h3>
+
+            {% if articleForm.vars.data.imageFilename|default %}#}
+       
+             {#
+             <form method="POST" action="#" enctype="multipart/form-data">
+             <input type="file" class="custom-file-inputs" name="image" id="image">
+            
+             <label for="image" class="custom-file-labels"> </label>
+              </form>
+                   #}
+              <img class=" aca col-sm-12 img rounded-circle img-fluid" src="{{ asset(persona.PersonaImagePath) }}"  height="20"/>
+
+              {# <img src="{{ uploaded_asset(articleForm.vars.data.imagePath)|imagine_filter('squared_thumbnail_small') }}"> #} 
+              
+            {% endif %}
+
+           
+
+  </div>

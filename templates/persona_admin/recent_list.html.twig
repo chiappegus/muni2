@@ -1,0 +1,9 @@
+{# templates/article/recent_list.html.twig #}
+ 
+
+
+ {% for persona in personas %}
+     <a href="{{ path('persona_edit', {'id': persona.id}) }}" class="btn btn-info btn-sm " id="btn-color-picker" role="button" >edit</a>
+        {{ persona.id }}
+    </a>
+{% endfor %}

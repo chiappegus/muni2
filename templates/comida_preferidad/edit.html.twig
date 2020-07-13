@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit ComidaPreferidad{% endblock %}
+
+{% block body %}
+    <h1>Edit ComidaPreferidad</h1>
+
+    {{ include('comida_preferidad/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('comida_preferidad_index') }}">back to list</a>
+
+    {{ include('comida_preferidad/_delete_form.html.twig') }}
+{% endblock %}

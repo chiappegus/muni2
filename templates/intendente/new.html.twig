@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+
+{% block javascripts %}
+  {{parent()}}
+  
+ <script src="{{asset('js/bootstrap-datepicker.min.js')}}"></script> 
+ <script src="{{asset('locales/bootstrap-datepicker.es.min.js')}}"></script> 
+
+
+ <script>
+    $(document).ready(function() {
+        // you may need to change this code if you are not using Bootstrap Datepicker
+       /* $('.js-datepicker').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+   */
+       
+          $('.js-datepicker').datepicker({
+        language: "es",
+        autoclose: true,
+        todayHighlight: true
+    });
+
+       /* $('.js-datepicker').datepicker({
+        language: "es",
+        keyboardNavigation: false,
+        autoclose: true,
+        todayHighlight: true,
+        beforeShowDay: function(date){
+              if (date.getMonth() == (new Date()).getMonth())
+                switch (date.getDate()){
+                  case 4:
+                    return {
+                      tooltip: 'Example tooltip',
+                      classes: 'active'
+                    };
+                  case 8:
+                    return false;
+                  case 12:
+                    return "green";
+              }
+            }
+    });*/
+         });
+</script>
+{% endblock javascripts %}
+
+  
+{% block stylesheets %}
+
+	{{parent()}}
+<link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-datepicker.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-datepicker.min.css')}}">
+{% endblock %}
+
+
+
+
+{% block title %}New Intendente{% endblock %}
+
+
+
+{% block body %}
+	
+
+	<p>Username: {{ app.user.username ?? 'Anonymous user' }}</p>
+{% if app.debug %}
+    <p>Request method: {{ app.request.method }}</p>
+    <p>Application Environment: {{ app.environment }}</p>
+{% endif %}
+
+
+    <h1>Create new Intendente</h1>
+
+    {{ include('intendente/_form.html.twig') }}
+
+    <a href="{{ path('intendente_index') }}">back to list</a>
+{% endblock %}
+
+

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Persona{% endblock %}
+
+{% block body %}
+    <h1>Create new Persona</h1>
+
+    {{ include('persona/_form.html.twig') }}
+
+    <a href="{{ path('persona_index') }}">back to list</a>
+{% endblock %}
+
+{% block javascripts %}
+	{{parent()}}
+<script>
+     	 $('.custom-file-input').on('change', function(event) {
+                    var inputFile = event.currentTarget;
+                    $(inputFile).parent()
+                        .find('.custom-file-label')
+                        .html(inputFile.files[0].name);
+                });
+
+
+$("#persona_imageFile").attr("placeholder", "Type here to search");
+
+//document.getElementsByClassName("label.custom-file-label").placeholder = "Type name here.."; 
+
+            </script>
+{% endblock %}

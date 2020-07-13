@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Intendente{% endblock %}
+
+{% block body %}
+
+    <h1>Intendente</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ intendente.id }}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ intendente.estado }}</td>
+            </tr>
+            <tr>
+                <th>Fecha_inicio</th>
+                <td>{{ intendente.fechaInicio ? intendente.fechaInicio|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Fin_Funcion</th>
+                <td>{{ intendente.finFuncion ? intendente.finFuncion|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary">Delete</button>
+
+      
+
+    <a href="{{ path('intendente_index') }}">back to list</a>
+
+    <a href="{{ path('intendente_edit', {'id': intendente.id}) }}">edit</a>
+
+    {{ include('intendente/_delete_form.html.twig') }}
+
+    <h1 class="text-center" data-toggle="tooltip" data-placement="bottom" title="js de bootstrap funcionando :)" >Hola <s>Acceseo</s> acceseo!</h1>
+
+    {% block javascripts %}
+       
+
+ 
+
+
+ <script src="{{ asset('js/pepe.js') }}"></script>
+
+
+    {% endblock %}
+
+
+     <table class="table">
+        <tbody>
+            <tr>
+                <th>Id_Persona</th>
+                <td>{{ persona.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ persona.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Apellido</th>
+                <td>{{ persona.apellido }}</td>
+            </tr>
+
+            <tr>
+                <th>DNI</th>
+                <td>{{ persona.dni }}</td>
+            </tr>
+            
+        </tbody>
+    </table>
+{% endblock %}
+
+
+   

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Intendente index{% endblock %}
+
+{% block body %}
+    <h1>Intendente index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Estado</th>
+                <th>Fecha_inicio</th>
+                <th>Fin_Funcion</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for intendente in intendentes %}
+            <tr>
+                <td>{{ intendente.id }}</td>
+                <td>{{ intendente.estado }}</td>
+                <td>{{ intendente.fechaInicio ? intendente.fechaInicio|date('Y-m-d') : '' }}</td>
+                <td>{{ intendente.finFuncion ? intendente.finFuncion|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('intendente_show', {'id': intendente.id}) }}">show</a>
+                    <a href="{{ path('intendente_edit', {'id': intendente.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('intendente_new') }}">Create new</a>
+   
+
+{% endblock %}

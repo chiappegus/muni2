@@ -1,0 +1,197 @@
+/* estilo gral */
+
+body {
+    background: #eee;
+}
+/* registro */
+
+.box-form {
+    background: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    padding-top: 0px;
+    margin: 0px auto;
+    float: none;
+}
+.box-form input {
+    margin-bottom: 10px;
+}
+.box-form label {
+    font-size: 0.6em;
+    font-style: italic;
+    font-family: "Times New Roman", Times, serif;
+}
+/* label[for="backendbundle_user"] {
+	font-size: 9px;
+} */
+
+/* header*/
+
+.navbar-collapse .avatar {
+    background: white;
+    border-radius: 500px;
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    float: left;
+    margin-right: 12px;
+    margin-top: -7px;
+}
+/* imagen */
+
+.navbar-collapse .avatar img {
+    height: 100%;
+    text-align: center;
+}
+.box-users {
+    font-size: 0.6em;
+}
+th a {
+    color: white;
+}
+.letra_chica {
+    font-size: 0.6em;
+}
+.box-default {
+    background: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    padding-top: 0px;
+    margin: 0px auto;
+    float: none;
+}
+/* gente */
+
+.user-item .avatar, .publication-item .avatar {
+    background: #eee;
+    border-radius: 500px;
+    width: 75px;
+    height: 75px;
+    overflow: hidden;
+}
+.user-item .avatar img, .publication-item .avatar img {
+    height: 100%;
+    text-align: center;
+}
+.publication-item .publication-item-content {
+    margin-left: 85px;
+    padding: 10px;
+}
+.pub-name-link {
+    font-weight: bold;
+    color: black;
+}
+.pub-date {
+    color: grey;
+}
+/* home */
+
+#timeline {
+    margin-right: 20px;
+    min-height: 750px;
+    margin-bottom: 20px;
+}
+#user-card {
+    padding: 20px;
+    margin-bottom: 20px;
+}
+#user-card .avatar {
+    background: #F5F9DF;
+    border-radius: 500px;
+    width: 75px;
+    height: 75px;
+    overflow: hidden;
+    float: left;
+}
+#user-card .avatar img {
+    height: 100%;
+    text-align: center;
+}
+#user-card .avatar img .default {
+    opacity: 0.5;
+}
+#user-card .name-surname {
+    float: left;
+    font-size: 20px;
+    padding: 10px;
+}
+#user-card .name-surname a {
+    color: black;
+}
+#user-card .nickname {
+    opacity: 0.7;
+}
+.box-header {
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+    padding-top: 10px;
+    font-size: 25px;
+}
+#new-publication input, #new-publication textarea {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+input#publication_image.form-control, input#publication_document.form-control {
+    height: auto;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+button#publication_document.form-control {
+    height: auto;
+}
+.pub-image {
+    display: none;
+    transition: all 300ms;
+}
+.pub-image img {
+    width: 100%;
+    text-align: center;
+    display: block;
+    margin: 0px auto;
+}
+.publication-item .glyphicon {
+    margin-right: 7px;
+    cursor: pointer;
+    color: #444;
+}
+.btn-delete-pub:hover {
+    font-size: 25px !important;
+    color: red !important;
+    cursor: pointer!important;
+}
+.btn-like {
+    font-size: 25px !important;
+    margin-top: -45px;
+    size: 3em !important;
+}
+.btn-unlike {
+    font-size: 25px !important;
+    margin-top: -45px;
+    size: 3em !important;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+}
+.btn-like:hover {
+    font-size: 25px !important;
+    color: red !important;
+    cursor: pointer!important;
+}
+/* .btn .btn-unlike .active .glyphicon .glyphicon-heart-empty{
+     
+	border:15px solid;
+	color: red !important;
+
+	
+
+ } */
+
+/* .publication-item .btn-unlike .glyphicon {
+	color: red !important;
+} */
+
+/*  .btn-unlike {
+	font-size: 25px !important;
+	color: red !important;
+	cursor: pointer!important;
+} */

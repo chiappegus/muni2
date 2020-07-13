@@ -1,0 +1,136 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Persona index{% endblock %}
+  {% block stylesheets %}
+    {{parent()}}
+
+
+<style>
+.div-bg {
+    height: 200px;
+    width: 200px;
+    border: 1px solid black;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+#btn-color-picker {
+    background:#75F9A0;
+     color:#FF0000;
+    
+    /*border: #000 1px solid;
+    padding: 2px;
+    cursor: pointer;*/
+}
+
+
+
+
+
+/*
+.themed-grid-col{
+    padding-top: 15px;
+padding-bottom: 15px;
+background-color: rgba(86, 61, 124, .15);
+    border: 1px solid rgba(86, 61, 124, .2);
+}*/
+.container{
+    padding-top: 15px;
+    padding-bottom: 15px;
+ /*background:#75F9A0;
+   */  color:#FF0000;
+    
+}
+
+
+
+#btn-color-picker:hover {
+    background:#0A7C28;
+    font-size:1em;
+  /*  border: #000 1px solid;
+    padding: 2px;
+    cursor: pointer;*/
+}
+</style>
+{% endblock %}
+
+{% block body %}
+    <h1>hello Persona index  el controlador es {{ nombre_controlador }} </h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Dni</th>
+                <th>actions</th>
+                <th><small> Funcion </small></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for persona in personas %}
+            <tr>
+                <td>{{ persona.id }}</td>
+                <td>{{ persona.nombre }}</td>
+                <td>{{ persona.apellido }}</td>
+                <td>{{ persona.dni }}</td>
+                <td>
+                    <a href="{{ path('persona_show', {'id': persona.id}) }}" class="btn btn-info btn-sm " role="button" >show</a>
+
+                  {#
+                    <a href="{{ path('persona_show', {'id': persona.id}) }}">show</a>
+                    <a href="{{ path('persona_edit', {'id': persona.id}) }}">edit</a>#}
+
+                    <a href="{{ path('persona_edit', {'id': persona.id}) }}" class="btn btn-info btn-sm " id="btn-color-picker" role="button" >edit</a>
+                </td>
+               
+                <td>
+                     {% if persona.intendente %}
+                        
+                          <span class="fa fa-close">({{persona.intendente|length}} cantidad)</span>
+                    {% else %}
+                      
+                       <span class="glyphicon glyphicon-envelope">Sin Funcion</span> 
+                       <div class="spinner-grow text-success"></div>
+                       <div class="spinner-grow spinner-grow-sm"></div>
+                    {% endif %}
+                </td>
+                
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('persona_new') }}">Create new</a>
+
+
+
+
+<div class="container col-sm-12">
+    <div class="col-md-8 themed-grid-col">
+      <div class="pb-3">
+        .col-md-8
+      </div>
+      <div class="row">
+        <div class="col-md-6 themed-grid-col">.col-md-6</div>
+        <div class="col-md-6 themed-grid-col">.col-md-6</div>
+        <div class="col-md-7 themed-grid-col">.col-md-7</div>
+        <div class="col-md-5 themed-grid-col">.col-md-5</div>
+      </div>
+    </div>
+
+    
+       <div class="col-md-4 themed-grid-col">.col-md-4</div>
+  
+     </div>
+
+
+ 
+
+<!--  https://getbootstrap.com/docs/4.4/examples/grid/#containers -->
+{% endblock %}

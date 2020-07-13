@@ -1,0 +1,74 @@
+# App\Entity\Buffy:
+#   #buffy_{1..20}:
+#   buffy_{1..10}:
+#     #name: <name()>
+#     #name: <gustavoName()>
+#     #name: <gustavoNmujereslatinas()>
+#     name: <gustavoNombreslatinos()>
+#     quote: <buffyQuote()>
+#     pepe: '@ComidaPreferida*'
+#     #quote: <text()>
+
+# App\Entity\ComidaPreferidad:
+#   #buffy_{1..20}:
+#   ComidaPreferida{1..10}:
+#     nombre: <gustavoPComidas()>
+#   ComidaPreferida:
+#     nombre: <gustavoPComidas()>
+
+
+
+App\Entity\Persona:
+  #buffy_{1..20}:
+  persona_{1..1}:
+    #name: <name()>
+    #name: <gustavoName()>
+    #name: <gustavoNmujereslatinas()>
+    #nombre: <gustavoNombreslatinos()>
+    #nombre: <name('male'|'female' | gustavoNombreslatinos() |gustavoNmujereslatinas())>
+    #nombre:   randomElement( <gustavoNombreslatinos()> , <gustavoNmujereslatinas()> ) 
+    #nombre: <gustavoNombreslatinos() | firstName('male'|'female')> 
+    #nombre: <gustavoNombreslatinos() |  gustavoNmujereslatinas() | name('male'|'female')> 
+    #nombre: <gustavoNHombrelatinos() ; firstName('female')> 
+    nombre: <gustavoNombreslatinos()> 
+    #randomElement(1, 3, 5, 7, 9)
+    apellido: <lastName()>
+    dni (unique): <numberBetween(1500000,40000000)>
+    #ver lo de unique https://github.com/fzaninotto/Faker
+    #email: <safeEmail()>
+    #https://github.com/nelmio/alice/blob/master/doc/complete-reference.md#yaml
+    #email: '<current()>\@gustavo.com'
+    #email: '<current()>\@gustavo.com'
+    email (unique): <safeEmail()>
+    #encodePassword
+    # ver https://diegomalagon.com/api-rest-con-symfony-4/
+    #php bin/console security:encode-password 'engage' 
+    #register bin/console security:encode-password  'engage'
+    #$argon2i$v=19$m=65536,t=4,p=1$SWxVaVA5ZUZsZUJjdG54WQ$JJ2S9iUK+zQDm6sFsTD85TlqSTBCU+pNNHzHMjoWBew
+    password: '\$argon2i\$v=19\$m=65536,t=4,p=1\$SWxVaVA5ZUZsZUJjdG54WQ\$JJ2S9iUK+zQDm6sFsTD85TlqSTBCU+pNNHzHMjoWBew'
+    #password: <gustavoPass()>
+    roles: [ROLE_ADMIN]
+   
+    #Password:  sdasadsda
+    #encodePassword: iliketurtles
+    
+#     quote: <buffyQuote()>
+#     pepe: '@ComidaPreferida*'
+#     #quote: <text()>
+
+
+# App\Entity\Buffy:
+#   #buffy_{1..20}:
+#   buffy_{1..10}:
+#     #name: <name()>
+#     #name: <gustavoName()>
+#     #name: <gustavoNmujereslatinas()>
+#     name: <gustavoNombreslatinos()>
+#     quote: <buffyQuote()>
+#     pepe: '@ComidaPreferida*'
+#     #quote: <text()>
+
+
+
+
+

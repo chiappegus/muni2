@@ -1,0 +1,73 @@
+security:
+    encoders:
+       App\Entity\Persona:
+            algorithm: auto
+
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        #users_in_memory: { memory: null }
+        app_user_provider:
+            entity:
+              class: App\Entity\Persona
+              property: email
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_ADMIN_ARTICLE]
+        ROLE_SUPRA: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: lazy
+            #provider: users_in_memory
+            provider: app_user_provider
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
+                    - App\Security\ApiTokenAuthenticator
+                entry_point: App\Security\LoginFormAuthenticator
+            
+
+            logout:
+              path: app_logout
+              target: app_login
+              
+
+            remember_me:
+              secret: '%kernel.secret%'
+              lifetime: 2592000 # 30 days in seconds
+
+            switch_user: true
+            #http://localhost/muni/public/intendente?_switch_user=gust1@gus.com
+
+
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+ 
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+         - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         #- { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/persona/new, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         #- { path: ^/, roles: IS_AUTHENTICATED_REMEMBERED }
+         #- { path: ^/change-password, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/admin, roles: ROLE_ADMIN }
+         
+         - { path: ^/intendente/new, roles: ROLE_ADMIN }
+         - { path: ^/account, roles: IS_AUTHENTICATED_FULLY }
+         
+         # - { path: ^/persona, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+         # - { path: ^/intendente/, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+
+        # - { path: ^/intendente/new, roles: ROLE_ADMIN }
+         
+         
+        # - { path: ^/profile, roles: ROLE_USER }

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+     
+         <link rel="stylesheet" type="text/css" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
+         <link rel="stylesheet" type="text/css" href="{{asset('bootstrap/css/bootstrap-theme.min.css')}}">  
+         <link rel="stylesheet" type="text/css" href="{{asset('bootstrap/css/bootstrap-grid.min.css')}}">  
+         <link rel="stylesheet" type="text/css" href="{{asset('bootstrap/css/bootstrap-reboot.min.css')}}">
+
+
+        
+                 
+                    <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.cosmo.min.css')}}">
+          <link rel="stylesheet" type="text/css" href="{{asset('css/styles.css')}}">
+
+
+            <style type="text/css">
+
+
+
+
+       .colorMInisterio{
+
+  background-color: #4285f4 !important;
+} 
+</style>
+    
+  
+    
+     
+        {% endblock %}
+    </head>
+    <body>
+             {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+            <div class="alert alert-warning" style="margin-bottom: 0;">
+                You are currently switched to this user.
+                <a href="{{ path('persona_index', {'_switch_user': '_exit'}) }}">Exit Impersonation</a>
+            </div>
+        {% endif %}
+
+{#<nav class="navbar fixed-top navbar-expand-lg navbar-dark primary-color  fixed-top scrolling-navbar colorMInisterio">#}
+       {#  barra mio#}
+{#navbar navbar-expand-sm bg-dark navbar-dark fixed-top#}
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top colorMInisterio" >
+
+        <a href="{{path('persona_admin')}}" class="navbar-brand pt-0 pb-0">
+       
+            <img src="{{asset('images/logoMagyp-color-blanco.png')}}" alt="" class="transparent" height="60px">
+        </a>
+
+        <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item" ><a class="nav-link waves-effect waves-light" 
+                   style="color:blue; border: 1px solid powderblue;" href="#" >Mi banda</a></li>
+                <li class="nav-item"><a class="nav-link waves-effect waves-light" href="#">Novedades</a></li>
+        </ul>
+
+ {% if is_granted('ROLE_USER') %}
+  <div class="dropdown">
+    <button type="button" id="boton" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      Personas
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item " href="{{path('persona_index')}}">Mostrar<span class="glyphicon glyphicon-heart"></span></a>
+    {#   <a class="dropdown-item" href="{{path('persona_show')}}">Personas Mostrar</a>
+    <a class="dropdown-item" href="{{path('persona_edit')}}">Personas Editar</a> #}
+     {% if is_granted('ROLE_ADMIN') %}
+      <a class="dropdown-item" href="{{path('persona_new')}}">Crear</a>
+       {% endif %}
+    </div>
+  </div>
+
+   <div class="dropdown">
+    <button type="button" id="boton" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      Intendentes
+    </button>
+    <div class="dropdown-menu">
+      
+      <a class="dropdown-item " href="{{path('intendente_index')}}">Mostrar<span class="glyphicon glyphicon-heart"></span></a>
+
+     {#--  <a class="dropdown-item" href="{{path('intendente_show')}}">Intendentes Mostrar</a>
+     <a class="dropdown-item" href="{{path('intendente_edit')}}">Personas Editar</a> #}
+     {% if is_granted('ROLE_ADMIN') %}
+                                   
+                                
+      <a class="dropdown-item" href="{{path('intendente_new')}}">Crear</a>
+      {% endif %}
+    </div>
+     {% endif %}
+  </div>
+
+ 
+      
+              <ul class="dropdown">
+                    {% if is_granted('ROLE_USER') %}
+                        <li class="nav-item dropdown" style="color:blue; border: 1px ;margin-right:20px;" >
+                            <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             {#  <img class="nav-profile-img rounded-circle" src="{{ asset('images/default.jpg') }}" height="45em"> #}
+                               <img class="nav-profile-img rounded-circle" src="{{ app.user.ImagenAvatar(45) }}" >
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="{{ path('persona_show', {'id':app.user.id})}}">Profile</a>
+                               
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <a class="dropdown-item" href="{{ path('app_account') }}">Cuentas</a>
+                                {% endif %}
+                                  {% if is_granted('ROLE_SUPRA') %}
+                                    <a class="dropdown-item" href="{{ path('switch_SUPRA') }}">Switch</a>
+                                      <a class="dropdown-item" href="{{ path('api_account') }}">CuentasApi</a>
+                                {% endif %}
+                                <a class="dropdown-item" href="{{ path('app_logout') }}">Logout{{app.user.id}}</a> 
+                                 
+                            </div>
+                        </li>
+
+                       {% else %}
+                        <li class="nav-item">
+                            <a style="color: #fff;" class="nav-link" href="{{ path('app_login') }}">Login</a>
+
+                          
+                        </li>
+                            <li class="nav-item">
+                            <a style="color: #fff;" class="nav-link" href="{{ path('persona_new') }}">Registrarse</a>
+
+                           
+                        </li>
+                    {% endif %}
+                </ul>
+           
+
+        {#  
+        <ul class="nav navbar-nav navbar-right ">
+            <li>
+                <a class="white-text waves-effect waves-light"  style="color:blue; border: 1px solid powderblue;margin-right:20px;" href="{{ path('app_login') }}">Cerrar Sesión</a>
+
+            </li>
+        </ul>
+#}
+
+
+
+    
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+  </nav>
+
+
+    
+        {% block body %}{% endblock %}
+        {% block javascripts %}
+
+       {# <script src="{{asset('js/npm.js')}}"></script> #} 
+          
+		      <script src="{{asset('js/jquery.min.js')}}"></script>	
+
+
+         <!--  <script src="{{asset('js/bootstrap.min.js')}}"></script>   -->
+          <script src="{{asset('js/bootstrap4.min.js')}}"></script>	
+
+
+           <script src="{{asset('js/jquery-ias.min.js')}}"></script>  
+           <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>  
+          
+           <script src="{{asset('js/popper.min.js')}}"></script>	
+          <!--  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+
+           <script
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/6f13c9ae43.js" crossorigin="anonymous"></script>
+ <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script> 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>-->
+           
+
+
+
+        
+
+
+
+        {% endblock %}
+ {#   
+  {% if is_granted('ROLE_USER') %}
+
+         <p>Username: {{ app.user.username }}</p>
+{% if app.debug %}
+    <p>Request method: {{ app.request.method }}</p>
+    <p>Application Environment: {{ app.environment }}</p>
+{% endif %}
+{% endif %}
+#}
+
+    </body>
+
+
+
+
+
+</html>

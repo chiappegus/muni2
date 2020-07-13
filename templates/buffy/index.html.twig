@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Buffy index{% endblock %}
+
+{% block body %}
+    <h1>Buffy index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Quote</th>
+                <th>Slug</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for buffy in buffies %}
+            <tr>
+                <td>{{ buffy.id }}</td>
+                <td>{{ buffy.name }}</td>
+                <td>{{ buffy.quote }}</td>
+                <td>{{ buffy.slug }}</td>
+                <td>
+                    <a href="{{ path('buffy_show', {'id': buffy.id}) }}">show</a>
+                    <a href="{{ path('buffy_edit', {'id': buffy.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('buffy_new') }}">Create new</a>
+{% endblock %}

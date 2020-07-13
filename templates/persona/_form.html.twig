@@ -1,0 +1,125 @@
+<div class="container col-sm-10">
+{{ form_start(form) }}
+
+   {#   {{ form_widget(form) }}
+
+  {{ form_row(form.imageFile) }}
+
+
+      {{ form_row(form.imageFile, {
+        attr: {
+            'placeholder': 'SOLO ESTE FUNCIONA PERO '
+        }
+    }) }}
+
+
+    {{ form_widget(form.imageFile, {'attr': {'placeholder': 'SOLO ESTE FUNCIONA PERO'}}) }}
+
+#}
+<div class="row">
+          <div class="col-sm-9">
+            {{ form_row(form.nombre, {
+                attr: {
+                    'placeholder': 'Nombre'
+                }
+            }) }}
+        </div>
+
+        <div class="col-sm-9">
+            {{ form_row(form.apellido, {
+                attr: {
+                    'placeholder': 'Apellido'
+                }
+            }) }}
+        </div>
+
+
+         <div class="col-sm-9">
+            {{ form_row(form.dni, {
+                attr: {
+                    'placeholder': 'DNI'
+                }
+            }) }}
+        </div>
+
+
+    {#      <div class="col-sm-9">
+            {{ form_row(form.intendente, {
+                attr: {
+                    'placeholder': 'Es Intendente'
+                }
+            }) }}
+        </div> #}
+
+        <div class="col-sm-9">
+            {{ form_row(form.email, {
+                attr: {
+                    'placeholder': 'email'
+                }
+            }) }}
+        </div>
+
+           <div class="col-sm-9">
+            {{ form_row(form.password, {
+                attr: {
+                    'placeholder': 'password'
+                }
+            }) }}
+        </div>
+
+         <div class="col-sm-9">
+              {% if persona.PersonaImagePath!=""%}
+
+               <div class="col-sm-6">
+            {{ form_row(form.imageFile, {
+                attr: {
+                    'placeholder': persona.ImageFilename
+                }
+            }) }}
+        </div>
+
+         <div id="actualizar_Foto">
+          
+            {{ include('persona/_imagen_form.html.twig') }}
+
+              </div>
+
+           {# {% if articleForm.vars.data.imageFilename|default %}#}
+                   <img class=" col-sm-3 img rounded-circle img-fluid" src="{{ asset(persona.PersonaImagePath) }}"  height="20"/>
+              {# <img src="{{ uploaded_asset(articleForm.vars.data.imagePath)|imagine_filter('squared_thumbnail_small') }}"> #} 
+              
+            {% endif %}
+
+            
+        
+            
+             <div class="col-sm-9">
+            {{ form_row(form.imageFile, {
+                attr: {
+                    'placeholder': 'Select an article image'
+                }
+            }) }}
+           </div>
+
+    {#  <div id="actualizar_Foto">
+
+    {{ render(controller(
+        'App\\Controller\\PersonaAdminController::temporaryUploadActionss',{'persona.PersonaImagePath': persona.PersonaImagePath })) }}
+    </div>#}  
+       
+         
+
+        
+
+        </div>
+</div>
+
+
+    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+
+{{ form_end(form) }}
+
+    </div>
+
+
+ 

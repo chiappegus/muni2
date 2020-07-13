@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ComidaPreferidad{% endblock %}
+
+{% block body %}
+    <h1>ComidaPreferidad</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ comida_preferidad.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ comida_preferidad.nombre }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('comida_preferidad_index') }}">back to list</a>
+
+    <a href="{{ path('comida_preferidad_edit', {'id': comida_preferidad.id}) }}">edit</a>
+
+    {{ include('comida_preferidad/_delete_form.html.twig') }}
+{% endblock %}
