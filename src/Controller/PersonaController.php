@@ -26,6 +26,8 @@ class PersonaController extends AbstractController
      */
     public function index(PersonaRepository $personaRepository): Response
     {
+
+        dd('env(OAUTH_FACEBOOK_ID)');
         return $this->render('persona/index.html.twig', [
             //'personas'           => $personaRepository->findAll(),
             'personas'           => $personaRepository->findAll(),
