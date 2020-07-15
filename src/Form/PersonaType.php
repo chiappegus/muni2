@@ -60,7 +60,7 @@ class PersonaType extends AbstractType
                 //'mimeTypes'        => ["image/gif", "image/png"],
                 'mimeTypes'              => "image/*",
                 //'mimeTypes' => "image/png",
-                'maxSize'                => "2M",
+                'maxSize'                => "4M",
                 'mimeTypesMessage'       => 'El archivo no es una imagen válida.',
                 'sizeNotDetectedMessage' => 'El archivo no es una imagen válida',
                 // 'maxSize' => '5M',
@@ -70,7 +70,7 @@ class PersonaType extends AbstractType
 
         if (!$isEdit || !$persona->getImageFilename()) {
             $imageConstraints[] = new NotNull([
-                'message' => 'Por favor Subi una IMAGEN menor a 2MB',
+                'message' => 'Por favor Subi una IMAGEN menor a 4MB',
             ]);
         };
         // dd($imageConstraints);

@@ -27,6 +27,8 @@ security:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
                     - App\Security\ApiTokenAuthenticator
+                    - App\Security\FacebookAuthenticator
+                    #- App\Security\FacebookAuthenticator
                 entry_point: App\Security\LoginFormAuthenticator
             
 

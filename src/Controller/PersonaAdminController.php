@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Persona;
 use App\Repository\PersonaRepository;
+use Doctrine\Migrations\Generator\generate;
 use Gedmo\Sluggable\Util\Urlizer;
 use Knp\Component\Pager\PaginatorInterface;
 use Psr\Log\LoggerInterface;
@@ -11,13 +12,24 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Validator\Constraints as Assertion;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class PersonaAdminController extends AbstractController
 {
+
+    private $router;
+
+    public function __construct(
+        RouterInterface $router
+    ) {
+        $this->router = $router;
+    }
+
     /**
      * @Route("/admin/personaSINPAGINATOR", name="persona_adminSINPAGINATOR")
      */
@@ -472,6 +484,63 @@ se usa Urlizer por lo espacion
             $pagination,
             'nombre_controlador' => 'PersonaController',
         ]);
+
+    }
+
+    /**
+     * @Route("/facebook", name="facebook",methods={"GET","POST"})
+     *
+     */
+
+    public function facebook(PersonaRepository $personaRepository, Request $request, LoggerInterface $logger, PaginatorInterface $paginator)
+    {
+        $logger->info('Se esta Buscando por DNI , Function controlDni');
+
+        // dd($request);
+        //dd($router);
+        $facebook = $request->query->all();
+        //$request->attributes->get('_is_granted');
+        // dd($facebook["facebook"]["nombre"], $request->attributes->get('facebook'), array_key_first($facebook));
+
+        //dd($facebook);
+
+        // $persona = $personaRepository->findBy(['dni' => $dni]);
+
+        // $role = $request->attributes->get('_is_granted');
+        // $role = $role[0];
+        // //dd($role->getAttributes());
+        // dump($role->getAttributes());
+
+        // $pagination = $paginator->paginate(
+        //     $personaRepository->findAll(), /* query NOT result */
+        //     $request->query->getInt('page', 1), /*page number*/
+        //     10/*limit per page*/
+        // );
+
+        // return $this->render('persona_admin/supra.html.twig', [
+        //     'pagination'         => //$personaRepository->findBy([], ['dni' => 'asc']),
+        //     $pagination,
+        //     'nombre_controlador' => 'PersonaController',
+        // ]);
+
+        //      "facebook" => array:5 [▼
+        // "nombre" => "Gustavo"
+        // "email" => "ellocolocro@hotmail.com"
+        // "apellido" => "Chiappe"
+        // "foto_ruta" => "https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=10158227387394342&height=200&width=200&ext=1597366882&hash=AeSAJ_mxuZVi4pUV"
+        // "id_facebook" => "10158227387394342"
+
+        return new RedirectResponse($this->router->generate('persona_new', [
+            'facebook' => [
+                'nombre'      => $facebook["facebook"]["nombre"],
+                'email'       => $facebook["facebook"]["email"],
+                'apellido'    => $facebook["facebook"]["apellido"],
+                'foto_ruta'   => $facebook["facebook"]["foto_ruta"],
+                'id_facebook' => $facebook["facebook"]["id_facebook"]],
+
+        ]));
+        // persona_new
+        //return null;
 
     }
 

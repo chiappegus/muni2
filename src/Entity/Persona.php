@@ -91,6 +91,11 @@ class Persona implements UserInterface
      */
     private $apiTokens;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $IdFacebook;
+
     public function __construct()
     {
         $this->apiTokens = new ArrayCollection();
@@ -343,6 +348,18 @@ class Persona implements UserInterface
                 $apiToken->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIdFacebook():  ? string
+    {
+        return $this->IdFacebook;
+    }
+
+    public function setIdFacebook( ? string $IdFacebook) : self
+    {
+        $this->IdFacebook = $IdFacebook;
 
         return $this;
     }

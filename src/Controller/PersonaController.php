@@ -27,7 +27,6 @@ class PersonaController extends AbstractController
     public function index(PersonaRepository $personaRepository): Response
     {
 
-        dd('env(OAUTH_FACEBOOK_ID)');
         return $this->render('persona/index.html.twig', [
             //'personas'           => $personaRepository->findAll(),
             'personas'           => $personaRepository->findAll(),
@@ -53,7 +52,8 @@ class PersonaController extends AbstractController
         // dd($request->attributes->get('_route_params'));
         // dd($request->attributes->get('_access_control_attributes')[0]);
         // dd($aca);
-
+        $facebook = $request->query->all();
+        //dd($facebook);
         $roless = $request->attributes->get('_access_control_attributes')[0];
 
         // dd($this->isGranted('IS_AUTHENTICATED_ANONYMOUSLY'));
@@ -63,6 +63,19 @@ class PersonaController extends AbstractController
         if (!isset($_GET["persona"])) {
 
             $persona = new Persona();
+
+            if (isset($facebook['facebook'])) {
+
+                //dd($facebook['facebook']['nombre']);
+
+                $persona->setNombre($facebook['facebook']['nombre']);
+                $persona->setIdFacebook($facebook['facebook']['id_facebook']);
+                $persona->setEmail($facebook['facebook']['email']);
+                $persona->setApellido($facebook['facebook']['apellido']);
+                $persona->setImageFilename($facebook['facebook']['foto_ruta']);
+
+            }
+
         } else {
             $user    = $_GET["persona"];
             $persona = $personaRepository->find($user);
@@ -97,6 +110,7 @@ class PersonaController extends AbstractController
             //dd($form['imageFile']->getData());
             /** @var UploadedFile $uploadedFile */
             $uploadedFile = $form['imageFile']->getData();
+
             if ($uploadedFile) {
                 $newFilename = $uploaderHelper->uploadArticleImage($uploadedFile);
 
@@ -236,6 +250,6 @@ class PersonaController extends AbstractController
 
         return $this->redirect($this->generateUrl('persona_index'));}
 
-    /*----------  proximo https://hugo-soltys.com/blog/easily-implement-facebook-login-with-symfony-4  ----------*/
+/*----------  proximo https://hugo-soltys.com/blog/easily-implement-facebook-login-with-symfony-4  ----------*/
 
 }
