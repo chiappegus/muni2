@@ -5,6 +5,7 @@ namespace App\Security;
 use App\Entity\Persona;
 use App\Repository\PersonaRepository;
 use KnpU\OAuth2ClientBundle\Client\getAccessToken;
+use KnpU\OAuth2ClientBundle\Client\getSession;
 use KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient;
 use KnpU\OAuth2ClientBundle\Security\Helper\FinishRegistrationBehavior;
 use KnpU\OAuth2ClientBundle\Security\Helper\PreviousUrlHelper;
@@ -30,6 +31,7 @@ class FacebookAuthenticator extends AbstractGuardAuthenticator
 
     private $passwordEncoder;
     private $usuarios;
+    private $usuario_Encontrado;
 
     /**
      * @var Facebook
@@ -49,6 +51,7 @@ class FacebookAuthenticator extends AbstractGuardAuthenticator
         // todo
 
         return $request->attributes->get('_route') === 'connect_facebook_check';
+        //dd($request);
     }
 
     public function getCredentials(Request $request)
@@ -58,6 +61,10 @@ class FacebookAuthenticator extends AbstractGuardAuthenticator
             // skip authentication unless we're on this URL!
             return null;
         }
+        $this->usuarios = $this->facebookClient->getAccessToken();
+        //dd('usuarios', $this->usuarios, $this->facebookClient->getAccessToken());
+        //$access_token = $this->facebookClient->getToken();
+        //dd($access_token);
         //dd($this->facebookClient);
         // EAAH09CWDZAjsBAB9LrBz0wDHDlGNazCM71e48br0ZB4YfLnkmXoaTjCzRNmYTMuP1uaHvTSMj9w0nRQSCsP67OCfVXTzTkqnabYpHdccWM2OUSiHTp0cxlFnt3yrhf0y3hTUKxFNIUXOPEqLs2I6mssUuKEUxh1IBbYZCqLNgZDZD
         // dd($this->facebookClient->getAccessToken($request));
@@ -90,7 +97,10 @@ class FacebookAuthenticator extends AbstractGuardAuthenticator
 
         //return $this->fetchAccessToken($this->getFacebookClient());
         try {
-            return $this->facebookClient->getAccessToken();
+            //return
+            return $this->usuarios;
+            // $this->facebookClient->getAccessToken();
+
         } catch (IdentityProviderException $e) {
             // you could parse the response to see the problem
             throw $e;
@@ -99,6 +109,16 @@ class FacebookAuthenticator extends AbstractGuardAuthenticator
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
+        //dd();
+
+        //$provider = $this->facebookClient->getOAuth2Provider();
+        //dd($provider);
+        //$longLivedToken = $provider->getLongLivedAccessToken($credentials);
+
+        //dd($userAccessToken);
+
+        // dd($credentials, $longLivedToken);
+        #expires: 1599955726
         //dd($userProvider);
         //dd($credentials);
         //dd('caca', $facebookUser = $this->getFacebookClient());
@@ -106,10 +126,15 @@ class FacebookAuthenticator extends AbstractGuardAuthenticator
 
         /** @var FacebookUser $facebookUser */
         //$facebookUser = $this->getFacebookClient($credentials);
+        // $facebookUser = $this->facebookClient->fetchUserFromToken($userAccessToken);
+        $facebookUser = $this->facebookClient->fetchUserFromToken($this->usuarios);
+        //$credentials  = $longLivedToken;
+        $this->usuario_Encontrado = $facebookUser;
+        //dd('usuario_Encontrado', $this->usuario_Encontrado->getid());
 
-        $facebookUser = $this->facebookClient->fetchUserFromToken($credentials);
+        //$facebookUser = $this->facebookClient->fetchUser();
 
-        if ($this->userRepository->findOneBy(['IdFacebook' => $facebookUser->getid()]) == null) {
+        if ($this->userRepository->findOneBy(['IdFacebook' => $this->usuario_Encontrado->getid()]) == null) {
 
             //  return new RedirectResponse($facebookUser);
             //return false;
@@ -119,13 +144,14 @@ class FacebookAuthenticator extends AbstractGuardAuthenticator
 
         }
         // dd($this->userRepository->findOneBy(['IdFacebook' => $facebookUser->getid()]) == null);
-        $email = $facebookUser->getEmail();
+        $email = $this->usuario_Encontrado->getEmail();
+        //dd($email);
 
-        $id             = $facebookUser->getid();
-        $nombreCompleto = $facebookUser->getName();
-        $nombre         = $facebookUser->getFirstName();
-        $apellido       = $facebookUser->getLastName();
-        $Imagen         = $facebookUser->getPictureUrl();
+        $id             = $this->usuario_Encontrado->getid();
+        $nombreCompleto = $this->usuario_Encontrado->getName();
+        $nombre         = $this->usuario_Encontrado->getFirstName();
+        $apellido       = $this->usuario_Encontrado->getLastName();
+        $Imagen         = $this->usuario_Encontrado->getPictureUrl();
 
         // dd($id, $facebookUser, $email, $id, $nombreCompleto, $nombre, $apellido,
         // $Imagen, $this->userRepository->findOneBy(['email' => 'gust0@gus.com']));
@@ -141,11 +167,11 @@ class FacebookAuthenticator extends AbstractGuardAuthenticator
         // return $this->userRepository->findOneBy(['IdFacebook' => $facebookUser->getid()]);
         // if (null === $user) {throw new UsernameNotFoundException(sprintf('Null returned from %s::getUser()', \get_class($guardAuthenticator)));}
         $pepe = new Persona();
-        $pepe->getNombre($facebookUser->getFirstName());
-        $pepe->getEmail($facebookUser->getFirstName());
-        $pepe->getApellido($facebookUser->getLastName());
-        $pepe->getImageFilename($facebookUser->getPictureUrl());
-        $pepe->getIdFacebook($facebookUser->getid());
+        $pepe->getNombre($this->usuario_Encontrado->getFirstName());
+        $pepe->getEmail($this->usuario_Encontrado->getFirstName());
+        $pepe->getApellido($this->usuario_Encontrado->getLastName());
+        $pepe->getImageFilename($this->usuario_Encontrado->getPictureUrl());
+        $pepe->getIdFacebook($this->usuario_Encontrado->getid());
 
         //$this->userManager->updateUser($pepe);
         //$entityManager = $this->getDoctrine()->getManager();
@@ -153,6 +179,7 @@ class FacebookAuthenticator extends AbstractGuardAuthenticator
         //dd($this->facebookClient->fetchUser());
         // return $this->facebookClient->fetchUser();
         //return $userProvider->loadUserByUsername($pepe);
+
         return $pepe;
 
         //loadUserByUsername($username)
@@ -174,8 +201,22 @@ class FacebookAuthenticator extends AbstractGuardAuthenticator
 
     public function checkCredentials($credentials, UserInterface $user)
     {
+        //$provider = $this->facebookClient->getOAuth2Provider();
+        //dd($provider);
+        //$longLivedToken = $provider->getLongLivedAccessToken($credentials);
 
-        $facebookUser = $this->facebookClient->fetchUserFromToken($credentials);
+        //$facebookUser = $this->facebookClient->fetchUserFromToken($credentials);
+        //$provider = $this->facebookClient->getOAuth2Provider();
+        //dd($provider);
+        //$longLivedToken = $provider->getLongLivedAccessToken($credentials);
+
+        // $facebookUser = $this->facebookClient->fetchUserFromToken($this->facebookClient->getAccessToken());
+        // dd('aca', $facebookUser);
+
+        //$facebookUser = $this->facebookClient->fetchUser();
+        //$facebookUser = $this->facebookClient->fetchUser();
+        //
+
         //return new RedirectResponse($this->router->generate('app_login'));persona_index
         //return new RedirectResponse($this->router->generate('persona_new'));
         //$user = new Persona($pepe);
@@ -187,9 +228,9 @@ class FacebookAuthenticator extends AbstractGuardAuthenticator
         //dd('aca');
         // todo
 
-        $persona = new Persona($user);
-        $persona->setNombre($facebookUser->getName());
-        $persona->setApellido($facebookUser->getLastName());
+        // $persona = new Persona($user);
+        // $persona->setNombre($facebookUser->getName());
+        // $persona->setApellido($facebookUser->getLastName());
 
         //$userProvider->loadUserByUsername($persona->getUsername());
 
@@ -207,6 +248,8 @@ class FacebookAuthenticator extends AbstractGuardAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
+
+        //dd('aca', $this->facebookClient->getAccessToken());
         //dd($this->facebookClient->fetchUser());
 
         //dd($this->facebookClient->fetchUserFromToken($credentials));
@@ -246,21 +289,28 @@ class FacebookAuthenticator extends AbstractGuardAuthenticator
 
         //return new JsonResponse($error, Response::HTTP_UNAUTHORIZED);
         // return new JsonResponse($error, Response::HTTP_UNAUTHORIZED);
-        $facebookUser = $this->facebookClient->fetchUser();
-        $pepe         = new Persona();
-        $pepe->setNombre($facebookUser->getFirstName());
-        $pepe->setEmail($facebookUser->getEmail());
-        $pepe->setApellido($facebookUser->getLastName());
-        $pepe->setImageFilename($facebookUser->getPictureUrl());
-        $pepe->setIdFacebook($facebookUser->getid());
+        //$facebookUser = $this->facebookClient->fetchUserFromToken($credentials);
+        //$facebookUser = $this->facebookClient->fetchUser();
+
+        // $facebookUser = $this->facebookClient->fetchUserFromToken($this->facebookClient->getAccessToken());
+
+        //$facebookUser = $this->facebookClient->fetchUserFromToken($this->usuarios);
+        // dd('aca POR FIN', $facebookUser);
+
+        $pepe = new Persona();
+        $pepe->setNombre($this->usuario_Encontrado->getFirstName());
+        $pepe->setEmail($this->usuario_Encontrado->getEmail());
+        $pepe->setApellido($this->usuario_Encontrado->getLastName());
+        $pepe->setImageFilename($this->usuario_Encontrado->getPictureUrl());
+        $pepe->setIdFacebook($this->usuario_Encontrado->getid());
 
         return new RedirectResponse($this->router->generate('facebook', [
             'facebook' => [
-                'nombre'      => $facebookUser->getFirstName(),
-                'email'       => $facebookUser->getEmail(),
-                'apellido'    => $facebookUser->getLastName(),
-                'foto_ruta'   => $facebookUser->getPictureUrl(),
-                'id_facebook' => $facebookUser->getid()],
+                'nombre'      => $this->usuario_Encontrado->getFirstName(),
+                'email'       => $this->usuario_Encontrado->getEmail(),
+                'apellido'    => $this->usuario_Encontrado->getLastName(),
+                'foto_ruta'   => $this->usuario_Encontrado->getPictureUrl(),
+                'id_facebook' => $this->usuario_Encontrado->getid()],
 
         ]));
 
@@ -270,9 +320,9 @@ class FacebookAuthenticator extends AbstractGuardAuthenticator
     {
 
         //return $this->router->generate('persona_new');
-        dd($this->facebookClient->fetchUser());
+        //dd($this->facebookClient->fetchUser());
         //return new RedirectResponse($this->router->generate('persona_new'));
-        $facebookUser = $this->facebookClient->fetchUser();
+        // $facebookUser = $this->facebookClient->fetchUser();
         //dd($providerKey);
         // $pepe = new Persona();
         // $pepe->setNombre($facebookUser->getFirstName());
@@ -280,7 +330,7 @@ class FacebookAuthenticator extends AbstractGuardAuthenticator
         // $pepe->setApellido($facebookUser->getLastName());
         // $pepe->setImageFilename($facebookUser->getPictureUrl());
         // $pepe->setIdFacebook($facebookUser->getid());
-        dd($facebookUser);
+        // dd($facebookUser);
 
         return null;
 

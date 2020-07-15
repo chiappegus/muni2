@@ -36,7 +36,7 @@ class PersonaController extends AbstractController
 
     /**
      * @Route("/new", name="persona_new", methods={"GET","POST"})
-
+     * @IsGranted("IS_AUTHENTICATED_ANONYMOUSLY")
      */
     function new (Request $request, PersonaRepository $personaRepository, UploaderHelper $uploaderHelper, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $formAuthenticator): Response{
 //dd($em);

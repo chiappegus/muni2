@@ -489,13 +489,13 @@ se usa Urlizer por lo espacion
 
     /**
      * @Route("/facebook", name="facebook",methods={"GET","POST"})
-     *
+     * @IsGranted("IS_AUTHENTICATED_ANONYMOUSLY")
      */
 
     public function facebook(PersonaRepository $personaRepository, Request $request, LoggerInterface $logger, PaginatorInterface $paginator)
     {
         $logger->info('Se esta Buscando por DNI , Function controlDni');
-
+        //@IsGranted("IS_AUTHENTICATED_ANONYMOUSLY")
         // dd($request);
         //dd($router);
         $facebook = $request->query->all();
@@ -529,7 +529,7 @@ se usa Urlizer por lo espacion
         // "apellido" => "Chiappe"
         // "foto_ruta" => "https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=10158227387394342&height=200&width=200&ext=1597366882&hash=AeSAJ_mxuZVi4pUV"
         // "id_facebook" => "10158227387394342"
-
+        //dd($facebook);
         return new RedirectResponse($this->router->generate('persona_new', [
             'facebook' => [
                 'nombre'      => $facebook["facebook"]["nombre"],
