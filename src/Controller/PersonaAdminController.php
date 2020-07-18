@@ -535,13 +535,15 @@ se usa Urlizer por lo espacion
                 'nombre'      => $facebook["facebook"]["nombre"],
                 'email'       => $facebook["facebook"]["email"],
                 'apellido'    => $facebook["facebook"]["apellido"],
-                'foto_ruta'   => $facebook["facebook"]["foto_ruta"],
+                'foto_ruta'   => 'https://graph.facebook.com/$facebook/' . $facebook["facebook"]["id_facebook"] . '/picture?type=normal',
+                //'foto_ruta'   => $facebook["facebook"]["foto_ruta"],
+                //'foto_ruta'   => $facebook["facebook"]["foto_ruta"],
                 'id_facebook' => $facebook["facebook"]["id_facebook"]],
 
         ]));
         // persona_new
         //return null;
-
+        //        10158227387394342 / picture ? type = normal
     }
 
 }
